@@ -16,11 +16,12 @@ body{
 .Title{
     color:yellow;
     padding: 4vh;
+    font-family: 'Orbitron';
 }
 .cuadrado-principal{
     padding: 4vh;
     display:flex;
-    height: 70vh;
+    height: 100vh;
     width:50vw;
     background-color: black;
     border: solid;
@@ -28,10 +29,37 @@ body{
     border-color: rgb(0, 255, 0);
     border-width: 0.3vw;
 }
-.nombre{
-    color: white;
-}
 .personajes{
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.character-chart{
+    height:23.5vh;
+    aspect-ratio: 1/1;
+    border: solid;
+    border-color: rgb(0, 255, 0);
+    border-radius: 0.3vh;
+    border-width: 0.5vw;
+    display: flex;
+    flex-direction: column;
+}
+.nombre{
+    color: yellow;
+    font-size: 2.5vh;
+    font-family: 'Orbitron';
+}
+.altura{
+    color: yellow;
+    font-size: 1.75vh;
+    font-family: 'Orbitron';
+}
+.cuadrado-interaccion{
+    height:4vh;
+    width:50vw;
+    border:solid;
+    border-width: 0.5vw;
+    border-color: rgb(0, 255, 0);
+    border-radius: 0.3vw;
+    margin: 2vh;
 }
