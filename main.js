@@ -29,7 +29,7 @@ fetch('https://swapi.dev/api/people')          // Ruta al archivo JSON
 
     let cantidad =personaje.films.length;
 
-    if (ultres===prires){
+    if (ultres.title===prires.title){
       charactersContainer.innerHTML +=`
         <article class="character-chart">
         <h2 class="nombre">${personaje.name}</h2>
