@@ -1,9 +1,15 @@
-fetch('https://swapi.dev/api/people')          // Ruta al archivo JSON
+let i=1;
+
+Next.addEventListener("click", ()=>{
+  i=0+1;
+});
+Previous.addEventListener("click")
+  fetch('https://swapi.dev/api/people/?page='+String(i))          // Ruta al archivo JSON
   .then(response => response.json())  // Convertir la respuesta en JSON
   .then(data => {                     // Aquí tienes acceso al JSON en formato de objeto JS
     console.log('API funcionando:');
     let datos=data.results
-    console.log(datos)          // Asignar el JSON a la variable comidas
+    console.log(data)          // Asignar el JSON a la variable comidas
     mostrarPersonajes(datos)
   })
   .catch(error => {                   // Manejo de errores al leer el archivo JSON

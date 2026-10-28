@@ -62,4 +62,27 @@ body{
     border-color: rgb(0, 255, 0);
     border-radius: 0.3vw;
     margin: 2vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.next{
+    height: 3vh;
+    width: 4vw;
+    background-color: rgb(0, 255, 0);
+    color:white;
+    font-family: 'Orbitron';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.previous{
+    height: 3vh;
+    width: 7vw;
+    background-color: rgb(0, 255, 0);
+    color:white;
+    font-family: 'Orbitron';
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
