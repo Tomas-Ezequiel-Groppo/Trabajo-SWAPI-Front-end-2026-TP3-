@@ -1,20 +1,67 @@
 let i=1;
 
-Next.addEventListener("click", ()=>{
-  i=0+1;
-});
-Previous.addEventListener("click")
-  fetch('https://swapi.dev/api/people/?page='+String(i))          // Ruta al archivo JSON
-  .then(response => response.json())  // Convertir la respuesta en JSON
-  .then(data => {                     // Aquí tienes acceso al JSON en formato de objeto JS
+fetch('https://swapi.dev/api/people/?page='+String(i)) 
+  .then(response => response.json()) 
+  .then(data => {   
     console.log('API funcionando:');
     let datos=data.results
-    console.log(data)          // Asignar el JSON a la variable comidas
     mostrarPersonajes(datos)
   })
-  .catch(error => {                   // Manejo de errores al leer el archivo JSON
+  .catch(error => {               
     console.error('No se pudo traer la API. Error:', error);
   });
+
+Next.addEventListener("click", ()=>{
+  if (i===9){
+    fetch('https://swapi.dev/api/people/?page='+String(i))      
+    .then(response => response.json())  
+    .then(data => {                     
+      let datos=data.results       
+      mostrarPersonajes(datos)
+    })
+    .catch(error => {                   
+      console.error('No se pudo traer la API. Error:', error);
+    });
+  }
+  else{
+    i++;
+    fetch('https://swapi.dev/api/people/?page='+String(i))          
+    .then(response => response.json()) 
+    .then(data => {                    
+      let datos=data.results        
+      mostrarPersonajes(datos)
+    })
+    .catch(error => {                  
+      console.error('No se pudo traer la API. Error:', error);
+    });
+  }
+});
+Previous.addEventListener("click" ,() =>{
+  if (i===1){
+    fetch('https://swapi.dev/api/people/?page='+String(i))      
+    .then(response => response.json())  
+    .then(data => {                     
+      let datos=data.results         
+      mostrarPersonajes(datos)
+    })
+    .catch(error => {                   
+      console.error('No se pudo traer la API. Error:', error);
+    });
+  }
+  else{
+    i--;
+    fetch('https://swapi.dev/api/people/?page='+String(i))         
+    .then(response => response.json())  
+    .then(data => {                     
+      let datos=data.results        
+      mostrarPersonajes(datos)
+    })
+    .catch(error => {            
+      console.error('No se pudo traer la API. Error:', error);
+    });
+  }
+})
+
 
   let characters=[];
 
