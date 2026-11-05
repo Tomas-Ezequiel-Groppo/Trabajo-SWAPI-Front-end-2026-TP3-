@@ -3,13 +3,45 @@ let trilogia = "";
 
 Original.addEventListener("click",()=>{
   trilogia="original";
+  loadTrilogy(trilogia)
 });
 Precuelas.addEventListener("click",()=>{
   trilogia="precuelas";
+  loadTrilogy(trilogia)
 });
 Todas.addEventListener("click",()=>{
   trilogia="";
+  loadTrilogy(trilogia)
 })
+
+let arriba = document.getElementById('Header')
+
+function loadTrilogy(trilogy){
+  if (trilogy===""){
+    arriba.innerHTML=`
+    <header class="header" id="Header">
+        <img class ="portada" src="Recursos/Foto de Portada.jfif" alt="Imagen-de-portada">
+    <h1 class="Title">Wookipedia ORT</h1>
+    </header>
+    `
+  }
+  else if (trilogy==="original"){
+    arriba.innerHTML=`
+    <header class="header" id="Header">
+        <img class ="portada" src="Recursos/PortadaTrilogiaOriginal.png" alt="Imagen-de-portada">
+    <h1 class="Title">Wookipedia ORT (IV V VI)</h1>
+    </header>
+    `
+  }
+  else{
+    arriba.innerHTML=`
+    <header class="header" id="Header">
+        <img class ="portada" src="Recursos/PortadaPrecuelas.jfif" alt="Imagen-de-portada">
+    <h1 class="Title">Wookipedia ORT (I II III)</h1>
+    </header>
+    `
+  }
+}
 
 async function cargarPersonajes(){
 let i = 1;
@@ -192,12 +224,11 @@ async function mostrarPlanetasTrilogia(lista){
       let Planetas = await cargarPlanetas();
 
       if (trilogia===""){
-
-      }
-      else{
         mostrarPersonajes(Personajes);
         mostrarPlanetas(Planetas);
-        console.log(Planetas)
+      }
+      else{
+        
       }
   }
 
