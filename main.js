@@ -1,4 +1,15 @@
 let characters=[];
+let trilogia = "";
+
+Original.addEventListener("click",()=>{
+  trilogia="original";
+});
+Precuelas.addEventListener("click",()=>{
+  trilogia="precuelas";
+});
+Todas.addEventListener("click",()=>{
+  trilogia="";
+})
 
 async function cargarPersonajes(){
 let i = 1;
@@ -109,23 +120,85 @@ async function mostrarPersonajes(lista){
   async function mostrarPlanetas(lista){
     let planetsContainer = document.getElementById('Planetas');
     
-  planetsContainer.innerHTML=""
+  planetsContainer.innerHTML="";
 
-  for (let n=0; n<lista.length; n++){
-    planetsContainer.innerHTML += `
-        <article class="character-chart">
-        <h2 class="nombre">${lista[n].name}</h2>
-        </article>
-        `
-  }
-  }
+  for (const planeta of lista){
 
+    if (planeta.films.length===1){
+      let primeraAparicion = planeta.films[0];
+    let ultimaAparicion = planeta.films[planeta.films.length-1];
+
+    let prifetch = await fetch(primeraAparicion);
+
+    let prires = await prifetch.json();
+
+      planetsContainer.innerHTML += `
+      <article class="character-chart">
+      <h2 class="nombre">${planeta.name}</h2>
+      <p class="altura">Única aparición</p>
+      <p class="altura">${prires.title}</p>
+      </article>
+      `
+    }
+    else if (planeta.films.length===0){
+      planetsContainer.innerHTML += `
+      <article class="character-chart">
+      <h2 class="nombre">${planeta.name}</h2>
+      <p class="altura">El planeta no a aparecido</p>
+      <p class="altura">en ninguna de las películas</p>
+      </article>
+      `
+    }
+    else{
+      let primeraAparicion = planeta.films[0];
+    let ultimaAparicion = planeta.films[planeta.films.length-1];
+
+    let prifetch = await fetch(primeraAparicion);
+    let ultfetch = await fetch(ultimaAparicion);
+
+    let prires = await prifetch.json();
+    let ultres = await ultfetch.json();
+  
+    let cantidad = planeta.films.length;
+
+      planetsContainer.innerHTML += `
+      <article class="character-chart">
+      <h2 class="nombre">${planeta.name}</h2>
+      <p class="altura">Primera aparición</p>
+      <p class="altura">${prires.title}</p>
+      <p class="altura">Ultima aparición</p>
+      <p class="altura">${ultres.title}</p>
+      <p class="altura">Cantidad de apariciones</p>
+      <p class="altura">${cantidad}</p>
+      </article>
+      `
+    }
+  }
+}
+async function mostrarPersonajesTrilogia(lista){
+  if (trilogia==="original"){
+
+  }
+  else{
+
+  }
+}
+async function mostrarPlanetasTrilogia(lista){
+
+}
     async function cargar() {
+    
       let Personajes = await cargarPersonajes();
       let Planetas = await cargarPlanetas();
 
-      mostrarPersonajes(Personajes);
-      mostrarPlanetas(Planetas);
+      if (trilogia===""){
+
+      }
+      else{
+        mostrarPersonajes(Personajes);
+        mostrarPlanetas(Planetas);
+        console.log(Planetas)
+      }
   }
 
   cargar();
