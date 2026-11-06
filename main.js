@@ -4,14 +4,17 @@ let trilogia = "";
 Original.addEventListener("click",()=>{
   trilogia="original";
   loadTrilogy(trilogia)
+  cargar();
 });
 Precuelas.addEventListener("click",()=>{
   trilogia="precuelas";
   loadTrilogy(trilogia)
+  cargar();
 });
 Todas.addEventListener("click",()=>{
   trilogia="";
   loadTrilogy(trilogia)
+  cargar();
 })
 
 let arriba = document.getElementById('Header')
@@ -122,7 +125,7 @@ async function mostrarPersonajes(lista){
         </article>
         `
     });*/
-  }
+}
 
 
 
@@ -147,7 +150,7 @@ async function mostrarPersonajes(lista){
   i++;
     }
     return planets
-  }
+}
 
   async function mostrarPlanetas(lista){
     let planetsContainer = document.getElementById('Planetas');
@@ -158,7 +161,6 @@ async function mostrarPersonajes(lista){
 
     if (planeta.films.length===1){
       let primeraAparicion = planeta.films[0];
-    let ultimaAparicion = planeta.films[planeta.films.length-1];
 
     let prifetch = await fetch(primeraAparicion);
 
@@ -208,15 +210,149 @@ async function mostrarPersonajes(lista){
   }
 }
 async function mostrarPersonajesTrilogia(lista){
-  if (trilogia==="original"){
 
+  let charactersContainer = document.getElementById('Personajes');
+  charactersContainer.innerHTML="";
+  let cantidad= 0;
+  let z = 0;
+
+
+  if (trilogia==="original"){
+    for (const personaje of lista){
+        let yaMarcado = false;
+      z++;
+      let apariciones = [];
+      for (let n = 0; n<personaje.films.length;n++){
+        let aparicion = await fetch (personaje.films[n])
+        let apares = await aparicion.json()
+        let apatitle = await apares.title
+        apariciones.push(apatitle)
+      }
+      cantidad=apariciones.length
+      let prires = apariciones[0];
+      let ultres = apariciones[apariciones.length-1]
+      for (let m = 0; m<apariciones.length;m++){
+        console.log("Vuelta: "+z);
+        console.log("Numeración: " + m)
+        console.log("Marcado?: " + yaMarcado);
+        console.log("Aparición: " + apariciones[m]);
+        if ((apariciones[m]==="A New Hope" || apariciones[m]==="The Empire Strikes Back" || apariciones[m]==="Return of the Jedi")&&yaMarcado===false){
+          charactersContainer.innerHTML+=`
+            <article class="character-chart">
+            <h2 class="nombre">${personaje.name}</h2>
+            <p class="altura">Primera aparición</p>
+            <p class="altura">${prires}</p>
+            <p class="altura">Ultima aparición</p>
+            <p class="altura">${ultres}</p>
+            <p class="altura">Cantidad de apariciones</p>
+            <p class="altura">${cantidad}</p>
+            </article>
+          `
+          yaMarcado=true;
+        }
+      }
+    }
   }
   else{
-
+    for (const personaje of lista){
+        let yaMarcado = false;
+      let apariciones = [];
+      for (let n = 0; n<personaje.films.length;n++){
+        let aparicion = await fetch (personaje.films[n])
+        let apares = await aparicion.json()
+        let apatitle = await apares.title
+        apariciones.push(apatitle)
+      }
+      cantidad=apariciones.length
+        let prires = apariciones[0];
+      let ultres = apariciones[apariciones.length-1]
+      for (let m = 0; m<apariciones.length;m++){
+        if ((apariciones[m]==="The Phantom Menace" || apariciones[m]==="Attack of the Clones" || apariciones[m]==="Revenge of the Sith")&&yaMarcado===false){
+          charactersContainer.innerHTML+=`
+            <article class="character-chart">
+            <h2 class="nombre">${personaje.name}</h2>
+            <p class="altura">Primera aparición</p>
+            <p class="altura">${prires}</p>
+            <p class="altura">Ultima aparición</p>
+            <p class="altura">${ultres}</p>
+            <p class="altura">Cantidad de apariciones</p>
+            <p class="altura">${cantidad}</p>
+            </article>
+          `
+          yaMarcado=true;
+        }
+      }
+    }
   }
 }
 async function mostrarPlanetasTrilogia(lista){
+ 
+  let planetsContainer = document.getElementById('Planetas');
+  planetsContainer.innerHTML="";
+  let cantidad = 0;
 
+  if (trilogia==="original"){
+    for (const planetas of lista){
+        let yaMarcado = false;
+      let apariciones = [];
+      for (let n = 0; n<planetas.films.length;n++){
+        let aparicion = await fetch (planetas.films[n])
+        let apares = await aparicion.json()
+        let apatitle = await apares.title
+        apariciones.push(apatitle)
+      }
+      cantidad=apariciones.length
+        let prires = apariciones[0];
+      let ultres = apariciones[apariciones.length-1]
+      for (let m = 0; m<apariciones.length;m++){
+        if ((apariciones[m]==="A New Hope" || apariciones[m]==="The Empire Strikes Back" || apariciones[m]==="Return of the Jedi")&&yaMarcado===false){
+          planetsContainer.innerHTML+=`
+            <article class="character-chart">
+            <h2 class="nombre">${planetas.name}</h2>
+            <p class="altura">Primera aparición</p>
+            <p class="altura">${prires}</p>
+            <p class="altura">Ultima aparición</p>
+            <p class="altura">${ultres}</p>
+            <p class="altura">Cantidad de apariciones</p>
+            <p class="altura">${cantidad}</p>
+            </article>
+          `
+          yaMarcado=true;
+        }
+      }
+    }
+  }
+  else{
+    for (const planeta of lista){
+      let yaMarcado = false;
+      let apariciones = [];
+      for (let n = 0; n<planeta.films.length;n++){
+        let aparicion = await fetch (planeta.films[n])
+        let apares = await aparicion.json()
+        let apatitle = await apares.title
+        apariciones.push(apatitle)
+      }
+      cantidad=apariciones.length;
+        let prires = apariciones[0];
+      let ultres = apariciones[apariciones.length-1]
+      for (let m = 0; m<apariciones.length;m++){
+        if ((apariciones[m]==="The Phantom Menace" || apariciones[m]==="Attack of the Clones" || apariciones[m]==="Revenge of the Sith")&&yaMarcado===false){
+          planetsContainer.innerHTML+=`
+            <article class="character-chart">
+            <h2 class="nombre">${planeta.name}</h2>
+            <p class="altura">Primera aparición</p>
+            <p class="altura">${prires}</p>
+            <p class="altura">Ultima aparición</p>
+            <p class="altura">${ultres}</p>
+            <p class="altura">Cantidad de apariciones</p>
+            <p class="altura">${cantidad}</p>
+            </article>
+          `
+          yaMarcado=true;
+        }
+      }
+    }
+  }
 }
     async function cargar() {
     
@@ -228,7 +364,8 @@ async function mostrarPlanetasTrilogia(lista){
         mostrarPlanetas(Planetas);
       }
       else{
-        
+        mostrarPersonajesTrilogia(Personajes);
+        mostrarPlanetasTrilogia(Planetas);
       }
   }
 
