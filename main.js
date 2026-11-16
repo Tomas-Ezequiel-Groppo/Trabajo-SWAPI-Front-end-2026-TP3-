@@ -1,5 +1,5 @@
 let trilogia = "";
-
+let Categoria = document.getElementById('Categoria');
 Original.addEventListener("click",()=>{
   trilogia="original";
   loadTrilogy(trilogia)
@@ -356,8 +356,12 @@ async function mostrarPlanetasTrilogia(lista){
   }
 }
     async function cargar() {
+
+    document.getElementById('Personajes').innerHTML="";
+    document.getElementById('Planetas').innerHTML="";
     
-      let Personajes = await cargarPersonajes();
+      if (Categoria.value==="Todos"){
+         let Personajes = await cargarPersonajes();
       let Planetas = await cargarPlanetas();
 
       if (trilogia===""){
@@ -368,6 +372,29 @@ async function mostrarPlanetasTrilogia(lista){
         mostrarPersonajesTrilogia(Personajes);
         mostrarPlanetasTrilogia(Planetas);
       }
-  }
+      }
+      else if (Categoria.value==="Planetas"){
+      let Planetas = await cargarPlanetas();
 
+      if (trilogia===""){
+        mostrarPlanetas(Planetas);
+      }
+      else{
+        mostrarPlanetasTrilogia(Planetas);
+      }
+      }
+      else{
+         let Personajes = await cargarPersonajes();
+
+      if (trilogia===""){
+        mostrarPersonajes(Personajes);
+      }
+      else{
+        mostrarPersonajesTrilogia(Personajes);
+      }
+      }
+  }
+Categoria.addEventListener("change", ()=>{
+  cargar();
+});
   cargar();
