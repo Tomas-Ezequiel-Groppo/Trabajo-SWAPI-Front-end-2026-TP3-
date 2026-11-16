@@ -1,4 +1,3 @@
-let characters=[];
 let trilogia = "";
 
 Original.addEventListener("click",()=>{
@@ -47,6 +46,7 @@ function loadTrilogy(trilogy){
 }
 
 async function cargarPersonajes(){
+let characters = [];
 let i = 1;
 while (i<10){
 
@@ -129,10 +129,11 @@ async function mostrarPersonajes(lista){
 
 
 
-    let planets= []
+
 
 
   async function cargarPlanetas (){
+        let planets= []
     let i = 1;
     while (i<7){
       await fetch ("https://swapi.dev/api/planets/?page="+String(i))
