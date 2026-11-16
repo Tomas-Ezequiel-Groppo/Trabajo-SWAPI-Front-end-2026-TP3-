@@ -36,7 +36,7 @@ body{
 .cuadrado-principal{
     padding: 4vh;
     display:flex;
-    height: 800vh;
+    height:fit-content;
     width:75vw;
     background-color: black;
     border: solid;

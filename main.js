@@ -359,10 +359,22 @@ async function mostrarPlanetasTrilogia(lista){
 
     document.getElementById('Personajes').innerHTML="";
     document.getElementById('Planetas').innerHTML="";
+    let main = document.getElementById('Cuadrado-Principal');
     
       if (Categoria.value==="Todos"){
          let Personajes = await cargarPersonajes();
       let Planetas = await cargarPlanetas();
+      main.innerHTML=`
+        <h3 class="tituloCat">Personajes</h2>
+        <section class="personajes" id="Personajes">
+        </section>
+        <div class="separacion"></div>
+        <h3 class="tituloCat">Planetas</h3>
+        <section class="planetas" id="Planetas">
+        </section>
+        <section class="naves" id="Naves">
+        </section>
+        `;
 
       if (trilogia===""){
         mostrarPersonajes(Personajes);
@@ -375,6 +387,15 @@ async function mostrarPlanetasTrilogia(lista){
       }
       else if (Categoria.value==="Planetas"){
       let Planetas = await cargarPlanetas();
+      main.innerHTML=`
+        <section class="personajes" id="Personajes">
+        </section>
+        <h3 class="tituloCat">Planetas</h3>
+        <section class="planetas" id="Planetas">
+        </section>
+        <section class="naves" id="Naves">
+        </section>
+        `;
 
       if (trilogia===""){
         mostrarPlanetas(Planetas);
@@ -385,6 +406,15 @@ async function mostrarPlanetasTrilogia(lista){
       }
       else{
          let Personajes = await cargarPersonajes();
+         main.innerHTML=`
+        <h3 class="tituloCat">Personajes</h2>
+        <section class="personajes" id="Personajes">
+        </section>
+        <section class="planetas" id="Planetas">
+        </section>
+        <section class="naves" id="Naves">
+        </section>
+        `;
 
       if (trilogia===""){
         mostrarPersonajes(Personajes);
