@@ -131,6 +131,7 @@ async function mostrarPersonajes(lista){
 
 
 
+// https://swapi.dev/api/starships/9/
 
   async function cargarPlanetas (){
         let planets= []
@@ -154,7 +155,7 @@ async function mostrarPersonajes(lista){
 }
 
   async function mostrarPlanetas(lista){
-    let planetsContainer = document.getElementById('Planetas');
+  let planetsContainer = document.getElementById('Planetas');
     
   planetsContainer.innerHTML="";
 
@@ -209,6 +210,83 @@ async function mostrarPersonajes(lista){
       `
     }
   }
+}
+
+async function cargarNaves (){
+  let starships = [];
+  for (let i = 1; i<5;i++){
+    await fetch ("https://swapi.dev/api/starships/?page="+String(i))
+    .then(response => response.json()) 
+.then(data => {   
+  console.log('API funcionando:');
+  let datos=data.results
+  for (let n = 0; n<datos.length; n++){
+    starships.push(datos[n]);
+  }
+})
+.catch(error => {               
+  console.error('No se pudo traer la API. Error:', error);
+});
+}
+return starships;
+}
+async function mostrarNaves(lista){
+  let starshipsContainer = document.getElementById('Naves');
+    
+  starshipsContainer.innerHTML="";
+
+  for (const nave of lista){
+
+    if (nave.films.length===1){
+      let primeraAparicion = nave.films[0];
+
+    let prifetch = await fetch(primeraAparicion);
+
+    let prires = await prifetch.json();
+
+      starshipsContainer.innerHTML += `
+      <article class="character-chart">
+      <h2 class="nombre">${nave.name}</h2>
+      <p class="altura">Única aparición</p>
+      <p class="altura">${prires.title}</p>
+      </article>
+      `
+    }
+    else if (nave.films.length===0){
+      starshipsContainer.innerHTML += `
+      <article class="character-chart">
+      <h2 class="nombre">${nave.name}</h2>
+      <p class="altura">El planeta no a aparecido</p>
+      <p class="altura">en ninguna de las películas</p>
+      </article>
+      `
+    }
+    else{
+      let primeraAparicion = nave.films[0];
+    let ultimaAparicion = nave.films[nave.films.length-1];
+
+    let prifetch = await fetch(primeraAparicion);
+    let ultfetch = await fetch(ultimaAparicion);
+
+    let prires = await prifetch.json();
+    let ultres = await ultfetch.json();
+  
+    let cantidad = nave.films.length;
+
+      starshipsContainer.innerHTML += `
+      <article class="character-chart">
+      <h2 class="nombre">${nave.name}</h2>
+      <p class="altura">Primera aparición</p>
+      <p class="altura">${prires.title}</p>
+      <p class="altura">Ultima aparición</p>
+      <p class="altura">${ultres.title}</p>
+      <p class="altura">Cantidad de apariciones</p>
+      <p class="altura">${cantidad}</p>
+      </article>
+      `
+    }
+  }
+
 }
 async function mostrarPersonajesTrilogia(lista){
 
@@ -355,7 +433,76 @@ async function mostrarPlanetasTrilogia(lista){
     }
   }
 }
-    async function cargar() {
+async function mostrarNavesTrilogia(lista){
+ 
+  let starshipsContainer = document.getElementById('Naves');
+  starshipsContainer.innerHTML="";
+  let cantidad = 0;
+
+  if (trilogia==="original"){
+    for (const naves of lista){
+        let yaMarcado = false;
+      let apariciones = [];
+      for (let n = 0; n<naves.films.length;n++){
+        let aparicion = await fetch (naves.films[n])
+        let apares = await aparicion.json()
+        let apatitle = await apares.title
+        apariciones.push(apatitle)
+      }
+      cantidad=apariciones.length
+        let prires = apariciones[0];
+      let ultres = apariciones[apariciones.length-1]
+      for (let m = 0; m<apariciones.length;m++){
+        if ((apariciones[m]==="A New Hope" || apariciones[m]==="The Empire Strikes Back" || apariciones[m]==="Return of the Jedi")&&yaMarcado===false){
+          starshipsContainer.innerHTML+=`
+            <article class="character-chart">
+            <h2 class="nombre">${planetas.name}</h2>
+            <p class="altura">Primera aparición</p>
+            <p class="altura">${prires}</p>
+            <p class="altura">Ultima aparición</p>
+            <p class="altura">${ultres}</p>
+            <p class="altura">Cantidad de apariciones</p>
+            <p class="altura">${cantidad}</p>
+            </article>
+          `
+          yaMarcado=true;
+        }
+      }
+    }
+  }
+  else{
+    for (const nave of lista){
+      let yaMarcado = false;
+      let apariciones = [];
+      for (let n = 0; n<nave.films.length;n++){
+        let aparicion = await fetch (nave.films[n])
+        let apares = await aparicion.json()
+        let apatitle = await apares.title
+        apariciones.push(apatitle)
+      }
+      cantidad=apariciones.length;
+        let prires = apariciones[0];
+      let ultres = apariciones[apariciones.length-1]
+      for (let m = 0; m<apariciones.length;m++){
+        if ((apariciones[m]==="The Phantom Menace" || apariciones[m]==="Attack of the Clones" || apariciones[m]==="Revenge of the Sith")&&yaMarcado===false){
+          starshipsContainer.innerHTML+=`
+            <article class="character-chart">
+            <h2 class="nombre">${planeta.name}</h2>
+            <p class="altura">Primera aparición</p>
+            <p class="altura">${prires}</p>
+            <p class="altura">Ultima aparición</p>
+            <p class="altura">${ultres}</p>
+            <p class="altura">Cantidad de apariciones</p>
+            <p class="altura">${cantidad}</p>
+            </article>
+          `
+          yaMarcado=true;
+        }
+      }
+    }
+  } 
+}
+async function cargar(){
 
     document.getElementById('Personajes').innerHTML="";
     document.getElementById('Planetas').innerHTML="";
@@ -364,14 +511,17 @@ async function mostrarPlanetasTrilogia(lista){
       if (Categoria.value==="Todos"){
          let Personajes = await cargarPersonajes();
       let Planetas = await cargarPlanetas();
+      let Naves = await cargarNaves();
       main.innerHTML=`
-        <h3 class="tituloCat">Personajes</h2>
+         <h3 class="tituloCat">Personajes</h2>
         <section class="personajes" id="Personajes">
         </section>
         <div class="separacion"></div>
         <h3 class="tituloCat">Planetas</h3>
         <section class="planetas" id="Planetas">
         </section>
+        <div class="separacion"></div>
+        <h3 class="tituloCat">Naves</h3>
         <section class="naves" id="Naves">
         </section>
         `;
@@ -379,10 +529,12 @@ async function mostrarPlanetasTrilogia(lista){
       if (trilogia===""){
         mostrarPersonajes(Personajes);
         mostrarPlanetas(Planetas);
+        mostrarNaves(Naves);
       }
       else{
         mostrarPersonajesTrilogia(Personajes);
         mostrarPlanetasTrilogia(Planetas);
+        mostrarNavesTrilogia(Naves)
       }
       }
       else if (Categoria.value==="Planetas"){
@@ -404,7 +556,7 @@ async function mostrarPlanetasTrilogia(lista){
         mostrarPlanetasTrilogia(Planetas);
       }
       }
-      else{
+      else if (Categoria.value="Personajes"){
          let Personajes = await cargarPersonajes();
          main.innerHTML=`
         <h3 class="tituloCat">Personajes</h2>
@@ -423,7 +575,26 @@ async function mostrarPlanetasTrilogia(lista){
         mostrarPersonajesTrilogia(Personajes);
       }
       }
-  }
+      else{
+        let Naves = await cargarNaves();
+         main.innerHTML=`
+        <section class="personajes" id="Personajes">
+        </section>
+        <section class="planetas" id="Planetas">
+        </section>
+        <h3 class="tituloCat">Naves</h3>
+        <section class="naves" id="Naves">
+        </section>
+        `;
+
+      if (trilogia===""){
+        mostrarNaves(Naves);
+      }
+      else{
+        mostrarNavesTrilogia(Naves);
+      }
+      }
+}
 Categoria.addEventListener("change", ()=>{
   cargar();
 });

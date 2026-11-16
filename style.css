@@ -50,6 +50,11 @@ body{
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
+.naves{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
 .character-chart{
     height:23.5vh;
     aspect-ratio: 1/1;
